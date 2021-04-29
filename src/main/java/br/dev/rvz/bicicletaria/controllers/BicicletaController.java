@@ -17,6 +17,8 @@ public class BicicletaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Bicicleta gravarNovaBicicleta(@RequestBody CadastroBicicletaDTO cadastroBicicletaDTO) {
-        
+        return bicicletaService.gravarBicicleta(
+                cadastroBicicletaDTO.converterDtoParaModelo()
+        );
     }
 }
