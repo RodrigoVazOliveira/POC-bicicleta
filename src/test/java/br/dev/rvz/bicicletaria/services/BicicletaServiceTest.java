@@ -1,5 +1,7 @@
 package br.dev.rvz.bicicletaria.services;
 
+import br.dev.rvz.bicicletaria.domain.Bicicleta;
+import br.dev.rvz.bicicletaria.repositories.BicicletaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
