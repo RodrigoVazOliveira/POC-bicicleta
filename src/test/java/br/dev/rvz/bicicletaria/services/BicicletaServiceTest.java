@@ -24,7 +24,7 @@ public class BicicletaServiceTest {
         bicicleta = new Bicicleta("Modelo x", "Tipo 1", 26);
     }
 
-    @Test   
+    @Test
     public void testarCadastroBicicleta() {
         Mockito.when(bicicletaRepository.save(Mockito.any(Bicicleta.class))).thenReturn(bicicleta);
         Bicicleta obj = bicicletaService.gravarBicicleta(bicicleta);
