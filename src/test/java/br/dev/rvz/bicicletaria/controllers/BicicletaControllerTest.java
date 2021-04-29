@@ -2,6 +2,7 @@ package br.dev.rvz.bicicletaria.controllers;
 
 
 import br.dev.rvz.bicicletaria.domain.Bicicleta;
+import br.dev.rvz.bicicletaria.dtos.bicicleta.entrada.CadastroBicicletaDTO;
 import br.dev.rvz.bicicletaria.services.BicicletaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class BicicletaControllerTest {
         CadastroBicicletaDTO cadastroBicicletaDTO = new CadastroBicicletaDTO("Modelo 1", "Tipo 1", 27);
         String json = objectMapper.writeValueAsString(cadastroBicicletaDTO);
 
-        Bicicleta bicicleta = new Bicicleta(1, "Modelo 1", "Tipo 1", 27);
+        Bicicleta bicicleta = new Bicicleta(1L, "Modelo 1", "Tipo 1", 27);
 
         Mockito.when(bicicletaService.gravarBicicleta(Mockito.any(Bicicleta.class)))
                 .thenReturn(bicicleta);
