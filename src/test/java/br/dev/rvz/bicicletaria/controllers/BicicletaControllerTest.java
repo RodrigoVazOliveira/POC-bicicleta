@@ -5,6 +5,7 @@ import br.dev.rvz.bicicletaria.domain.Bicicleta;
 import br.dev.rvz.bicicletaria.dtos.bicicleta.entrada.CadastroBicicletaDTO;
 import br.dev.rvz.bicicletaria.services.BicicletaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.Assert;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.constraints.AssertTrue;
 
 @WebMvcTest
 public class BicicletaControllerTest {
@@ -47,5 +52,23 @@ public class BicicletaControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(resultado));
 
+    }
+
+    @Test
+    public void testarCadastrarBicicletaComError() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CadastroBicicletaDTO cadastroBicicletaDTO = new CadastroBicicletaDTO(null, "Tipo 1", 27);
+        String json = objectMapper.writeValueAsString(cadastroBicicletaDTO);
+
+        Mockito.when(bicicletaService.gravarBicicleta(Mockito.any(Bicicleta.class)));
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/bicicletas/")
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(
+                        result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException)
+                );
     }
 }
